@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", "Noto Sans SC", "WenQuanYi Zen Hei", ui-sans-serif, sans-serif;
+  --font-serif: "Fraunces", "Noto Serif SC", "WenQuanYi Zen Hei", ui-serif, serif;
+
+  --color-paper: #f3efe6;
+  --color-sheet: #fffdf8;
+  --color-ink: #1b1916;
+  --color-ink-soft: #3f382f;
+  --color-muted: #6f675c;
+  --color-line: #e4dccf;
+  --color-clay: #9a3412;
+  --color-clay-deep: #7c2d12;
+  --color-clay-hot: #c2410c;
+  --color-clay-soft: #f8e6da;
+  --color-court: #1f6b4a;
+  --color-court-soft: #e4f2eb;
+
+  --shadow-card: 0 1px 0 rgb(27 25 22 / 0.04), 0 16px 36px rgb(27 25 22 / 0.06);
+  --radius-card: 1.25rem;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+.tap {
+  transition:
+    scale 150ms ease-out,
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    color 200ms ease-out;
+}
+.tap:active:not(:disabled) {
+  scale: 0.96;
+}
+
+.scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.scroll-x::-webkit-scrollbar {
+  display: none;
+}
+.scroll-y {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.app-root {
+  min-height: 100dvh;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.app-frame {
+  display: flex;
+  height: 100dvh;
+  width: 100%;
+  min-height: 0;
+}
+@media (min-width: 768px) {
+  .app-root {
+    padding: 1rem;
+  }
+  .app-frame {
+    height: calc(100dvh - 2rem);
+    max-width: 72rem;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+.dock {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  gap: 0.25rem;
+  border-top: 1px solid var(--color-line);
+  background: var(--color-sheet);
+  padding: 0.25rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  .dock {
+    display: none;
+  }
+}
+
+.sheet-full {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-paper);
+}
+@media (min-width: 768px) {
+  .sheet-full {
+    display: none;
+  }
+}
+
+.compose-panel {
+  position: fixed;
+  z-index: 60;
+  top: 50%;
+  left: 50%;
+  width: min(34rem, calc(100vw - 1.5rem));
+  max-height: min(92dvh, 44rem);
+  overflow-y: auto;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius-card);
+  background: var(--color-sheet);
+  box-shadow: var(--shadow-card);
+}
+
+.rise {
+  animation: rise 420ms ease-out both;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tap:active:not(:disabled) {
+    scale: 1;
+  }
+  .rise {
+    animation: none;
+  }
+}
